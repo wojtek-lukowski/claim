@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "property-expert": {
+    "claim": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/property-expert",
+            "outputPath": "dist/claim",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "property-expert:build:production"
+              "buildTarget": "claim:build:production"
             },
             "development": {
-              "buildTarget": "property-expert:build:development"
+              "buildTarget": "claim:build:development"
             }
           },
           "defaultConfiguration": "development"
