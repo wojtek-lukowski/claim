@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 4px 8px;
+  height: 40px;
+  width: 150px;
+}
+
+button {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}

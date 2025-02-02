@@ -1,0 +1,6 @@
+<button (click)=onClick() [disabled]="disabled">
+  @if (icon) {
+  <mat-icon [fontIcon]="icon"></mat-icon>
+  }
+  {{label}}
+</button>

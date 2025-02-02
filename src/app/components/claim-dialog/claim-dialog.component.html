@@ -1,0 +1,93 @@
+<header class="bg-blue-900 py-4 pl-16">
+  <h3 class="text-2xl font-bold text-neutral-200">{{header}}</h3>
+</header>
+
+@if (claim) {
+<form #claimForm="ngForm" class="p-8">
+  <div class="scroll-container">
+    <mat-form-field>
+      <mat-label>{{ idLabel }}</mat-label>
+      <input matInput required name="id" type="text" [disabled]="isIdFieldDisabled" [(ngModel)]="claim.id">
+      @if (claimForm.submitted && !claim.id) {
+      <mat-error>{{idLabel}} is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ policyholderLabel }} </mat-label>
+      <input matInput required name="policyhoderName" type="text" [(ngModel)]="claim.policyholderName">
+      @if (claimForm.submitted && !claim.policyholderName) {
+      <mat-error>{{policyholderLabel}} is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field id="incidentDate">
+      <mat-label>{{ incidentDateLabel }}</mat-label>
+      <input matInput [matDatepicker]="picker" required="true" name="incidentDate" [(ngModel)]="claim.incidentDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      @if (claimForm.submitted && !claim.incidentDate) {
+      <mat-error>{{incidentDateLabel}} is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ damageCategoryLabel }}</mat-label>
+      <mat-select [(ngModel)]="claim.damageCategory" name="damageCategory" (selectionChange)="onCategoryChange()">
+        @for (category of damageCategoryList; track category) {
+        <mat-option [value]="category.value">{{category.value}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ damageSubategoryLabel }}</mat-label>
+      <mat-select [(ngModel)]="claim.damageSubcategory" name="damageSubcategory"
+        [disabled]="subCategoryList.length < 1">
+        @for (subcategory of subCategoryList; track subcategory) {
+        <mat-option [value]="subcategory.value">{{subcategory.value}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ descriptionLabel }}</mat-label>
+      <input matInput required type="text" name="description" [(ngModel)]="claim.description">
+      @if (claimForm.submitted && !claim.description) {
+      <mat-error>{{descriptionLabel}} is required</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- <div>
+      <quill-editor name="desc" [(ngModel)]="claimDescription"></quill-editor>
+    </div> -->
+
+    <mat-form-field>
+      <mat-label>{{ estimatedCostLabel }}</mat-label>
+      <input matInput type="number" name="estimateRepairCost" [(ngModel)]="claim.estimatedRepairCost">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ statusLabel }}</mat-label>
+      <mat-select name="status" [(ngModel)]="claim.status">
+        @for (status of statusList; track status) {
+        <mat-option [value]="status.value">{{status.value}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <footer>
+    @if (!isNew) {
+    <pe-button class="bg-red-600 text-neutral-50 font-bold" icon="delete" label="Remove"
+      (onButtonClick)="closeDialog(operationType.Delete)"></pe-button>
+    }
+    <pe-button class="bg-neutral-700 font-bold text-neutral-50" icon="close" label="Cancel"
+      (onButtonClick)="closeDialog(operationType.Cancel)"></pe-button>
+    <pe-button
+      [ngClass]="claimForm.valid? 'bg-green-700 font-bold text-neutral-50': 'bg-stone-400 font-bold text-neutral-50'"
+      icon="check" label="Submit" [disabled]="!claimForm.valid"
+      (onButtonClick)="closeDialog(operationType.Submit)"></pe-button>
+  </footer>
+</form>
+}
